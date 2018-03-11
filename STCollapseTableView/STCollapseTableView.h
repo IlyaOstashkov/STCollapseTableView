@@ -30,6 +30,13 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ODMCollapseTableViewToggleDelegate <NSObject>
+
+- (void)sectionWasExpanded:(NSInteger)section;
+- (void)sectionWasCollapsed:(NSInteger)section;
+
+@end
+
 /**
  *	STCollapseTableView is a UITableView subclass that automatically collapse and/or expand your sections.
  *
@@ -37,6 +44,11 @@
  *  By default all the sections are closed.
  */
 @interface STCollapseTableView : UITableView
+
+/**
+ Delegate property to notify about toogle sections
+ */
+@property (weak, nonatomic) id <ODMCollapseTableViewToggleDelegate> toggleDelegate;
 
 /**
  *	This property allow to enable/disable the exclusivity.

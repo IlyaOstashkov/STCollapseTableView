@@ -137,8 +137,8 @@
     {
         NSUInteger openedSection = [self openedSection];
         
+        [self setSectionAtIndex:openedSection open:NO];
 		[self setSectionAtIndex:sectionIndex open:YES];
-		[self setSectionAtIndex:openedSection open:NO];
         
         if(animated)
 		{
@@ -353,6 +353,14 @@
 	}
 	
 	[self.sectionsStates replaceObjectAtIndex:sectionIndex withObject:@(open)];
+    
+    if (open &&
+        [_toggleDelegate respondsToSelector:@selector(sectionWasExpanded:)])
+    [_toggleDelegate sectionWasExpanded:sectionIndex];
+    
+    if (!open &&
+        [_toggleDelegate respondsToSelector:@selector(sectionWasCollapsed:)])
+    [_toggleDelegate sectionWasCollapsed:sectionIndex];
 }
 
 - (NSUInteger)openedSection
